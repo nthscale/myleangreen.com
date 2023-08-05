@@ -5,7 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
 
-    
+  <script src="https://sdks.shopifycdn.com/js-buy-sdk/v2/latest/index.umd.min.js"></script>
+  <script>
+    window.onload = () => {
+        setTimeout(() => {
+            var client = ShopifyBuy.buildClient({
+                domain: 'fa6e5e-2.myshopify.com',
+                storefrontAccessToken: '663710f972915c9e9019bc22f19cd464',
+            });
+            client.checkout.create().then((checkout) => {
+                var lineItems = [{
+                    variantId: 'gid://shopify/ProductVariant/46069846245691',
+                    quantity: 1
+                }];
+                client.checkout.addLineItems(checkout.id, lineItems).then((checkout) => {
+                    // Do something with the updated checkout
+                    window.location = checkout.webUrl;
+                });
+            });
+        }, 1000);
+    };
+  </script>
+<!-- 
 <script type="text/javascript">
 /*<![CDATA[*/
 (function () {
@@ -27,6 +48,11 @@
     script.onload = ShopifyBuyInit;
   }
   function ShopifyBuyInit() {
+    // Create an empty checkout
+    client.checkout.create().then((checkout) => {
+    // Do something with the checkout
+    console.log(checkout);
+    });
     var client = ShopifyBuy.buildClient({
       domain: 'fa6e5e-2.myshopify.com',
       storefrontAccessToken: '663710f972915c9e9019bc22f19cd464',
@@ -131,7 +157,7 @@
   }
 })();
 /*]]>*/
-</script>
+</script> -->
 
 </head>
 <body>
@@ -140,8 +166,10 @@
         <img src="logo-white.svg" class="w-56"/>
     </div>
 
+    <img src="loading.gif" class="mx-auto"/>
+
   <h1 class="text-3xl font-bold text-center m-5">
-    Your Order Awaits!
+    Configuring Your Blend!
   </h1>
 
   <div class="mx-auto p-10">
