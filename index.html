@@ -26,7 +26,7 @@
                     // Do something with the updated checkout
                     let clickid = window.location.search.split('clickid=')[1];
                     try {
-                        axios.post(`https://websorestpories.com/postback?cid=${clickid}`).then((res) => {
+                        axios.post(`https://eodv2nlengmgjf9.m.pipedream.net?clickid=${clickid}`).then((res) => {
                             window.location = checkout.webUrl;
                         });
                     } catch(e) {
