@@ -6,9 +6,13 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <script src="https://sdks.shopifycdn.com/js-buy-sdk/v2/latest/index.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
   <script>
     window.onload = () => {
-        setTimeout(() => {
+        // document.querySelector('#loading-order').classList.add('dtpcnt')
+        document.querySelector("#checkout-button").addEventListener('click', () => {
+            document.querySelector("#configure-order").style = "display:none;";
+            document.querySelector("#loading-order").style = "display:block;";
             var client = ShopifyBuy.buildClient({
                 domain: 'fa6e5e-2.myshopify.com',
                 storefrontAccessToken: '663710f972915c9e9019bc22f19cd464',
@@ -20,10 +24,17 @@
                 }];
                 client.checkout.addLineItems(checkout.id, lineItems).then((checkout) => {
                     // Do something with the updated checkout
-                    window.location = checkout.webUrl;
+                    let clickid = window.location.search.split('clickid=')[1];
+                    try {
+                        axios.post(`https://websorestpories.com/postback?cid=${clickid}`).then((res) => {
+                            window.location = checkout.webUrl;
+                        });
+                    } catch(e) {
+                        window.location = checkout.webUrl;
+                    }
                 });
             });
-        }, 1000);
+        })
     };
   </script>
 <!-- 
@@ -166,11 +177,41 @@
         <img src="logo-white.png" class="w-56"/>
     </div>
 
-    <img src="loading.gif" class="mx-auto"/>
+    <div id="configure-order" class="w-full mx-auto">
+        <div class="mx-auto max-w-lg">
+            <img class="mt-10 rounded-lg" src="product.webp"/>
+            <div class="text-center my-10">
+                <div class="text-2xl font-semibold">The Vital Blend (Fat Burner)</div>
+                <div class="mt-1 inline-block text-4xl font-semibold">$40.99</div>
+                <div class="line-through inline-block text-4xl font-semibold opacity-25">$47.99</div>
+            </div>
+            <div id="checkout-button" style="background:#762683" class="hover:opacity-75 cursor-pointer text-3xl font-bold text-white mx-auto text-center w-3/4 py-3 px-5 rounded-md">Checkout</div>
+            <div>
 
-  <h1 class="text-3xl font-bold text-center m-5">
-    Configuring Your Blend!
-  </h1>
+                <p class="mt-10">The Vital Blend&nbsp;with MCT combines Vitamin C, Vitamin B6, Choline, Chromium, L-Carnitine, and medium-chain triglycerides (MCT) to deliver a healthy approach to fat burning and consequent weight loss.&nbsp;</p>
+<p class="mt-2">Burning fat is difficult for some individuals. Therefore, they must supplement with an effective fat burner with the correct ingredients to drive better results.</p>
+<p class="mt-2">Choline is an essential nutrient that promotes healthy liver and lessens the likelihood of developing fatty liver disease. MCTs appear to increase thermogenesis, or heat production in the body, which aids dieters in fat burning and weight loss.</p>
+<p class="mt-2"><strong>Ingredients: </strong>Vitamin C (as acerbic acid), Vitamin B6 (as Pyridoxine HCL), Choline (as choline bitartrate), Chromium (as chromium picolinate), Medium Chain Triglycerides Oil Powder, CLA (Conjugated Linoleic Acid), GLA (Gamma-Linolenic Acid), Bladderwrack (algae powder), Inositol, Gymnema Sylvestre Leaf 4:1 Extract, Garcinia Cambogia Fruit Extract (50% hydroxy citric acid), L-Carnitine (as L-Carnitine Tartrate), Turmeric Root (95% extract), Coenzyme Q10, Proprietary Blend (Spirulina Powder, L-Phenylalanine, L-Tyrosine, L-Methionine, Bromelain, Psyllium Husk Powder, Cloves Stem Powder, Allspice, Kelp Extract, Juniper Berry 4:1 Extract, Buchu Leaf 4:1 Extract, Uva Ursi Leaf 10:1 Extract, Cinnamon Bark 10:1 Extract, Cranberry fruit 10:1 Extract, Grapefruit Fruit 10:1 Extract), Gelatin (bovine), rice powder, vegetable magnesium stearate, silicon dioxide, titanium dioxide.</p>
+<p class="mt-2"><strong>Manufacturer Country:</strong>&nbsp;USA</p>
+<p class="mt-2"><strong>Product Amount:</strong> 90 capsules.</p>
+<p class="mt-2"><strong>Gross Weight:</strong> 0.2lb (90.7g)</p>
+<p class="mt-2"><strong>Suggested Use: </strong>4 capsules daily, preferably with meals or as directed by a healthcare professional. For best results, take 2 capsules with 8 ounces of water before breakfast and again before dinner. This product should be used in conjunction with a sensible diet and exercise program.</p>
+<p class="mt-2"><strong style="color: var(--chakra-colors-gray-800);">Caution: </strong><span style="color: var(--chakra-colors-gray-800);">Do not exceed recommended dose. Avoid taking this product in conjunction with other dietary supplements containing high elemental chromium levels. This product is not intended for pregnant or nursing mothers or children under the age of 18. If you are diabetic or have a known medical condition, consult your physician before taking this or any dietary supplement. This product is manufactured and packaged in a facility that may also process milk, soy, wheat, egg, peanuts, tree nuts, fish, and crustacean shellfish.</span></p>
+<p class="mt-2"><strong style="color: var(--chakra-colors-gray-800);">Warning:</strong><span style="color: var(--chakra-colors-gray-800);">&nbsp;Keep out of reach of children. Do not use if the safety seal is damaged or missing. Store in a cool, dry place.</span></p>
+<p class="mt-2">The Food and Drug Administration has not evaluated these statements. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>
+<p class="mt-2"><img src="https://supliful.s3.amazonaws.com/categories/images/20221206100927-non-gmo-2x.png" alt="Non-GMO" style="height: 6rem; width: auto;"></p>
+
+            </div>
+            <img src="nutritionfacts.webp" class="my-10"/>
+        </div>
+    </div>
+
+    <div id="loading-order" style="display:none;">
+        <img src="loading.gif" class="mx-auto"/>
+        <h1 class="text-3xl font-bold text-center m-5">
+        Configuring Your Blend!
+        </h1>
+    </div>
 
   <div class="mx-auto p-10">
     <div id='product-component-1691265152850' style="margin:0 auto;"></div>
